@@ -61,6 +61,9 @@ class ConcertController extends Controller
 
         $validated = $validator->getData();
 
+        $validated['start_at'] = date('Y-m-d', strtotime($validated['start_at']));
+        $validated['end_at'] = date('Y-m-d', strtotime($validated['end_at']));
+
         $concert = Concert::create($validated);
 
         return response()->json([
@@ -123,6 +126,9 @@ class ConcertController extends Controller
         }
 
         $validated = $validator->getData();
+
+        $validated['start_at'] = date('Y-m-d', strtotime($validated['start_at']));
+        $validated['end_at'] = date('Y-m-d', strtotime($validated['end_at']));
 
         $concert = Concert::findById($id)->update($validated);
 

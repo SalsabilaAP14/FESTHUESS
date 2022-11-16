@@ -61,6 +61,9 @@ class TransactionController extends Controller
 
         $validated = $validator->getData();
 
+        $validated['paid_at'] = date('Y-m-d', strtotime($validated['paid_at']));
+        $validated['book_at'] = date('Y-m-d', strtotime($validated['book_at']));
+
         $transaction = Transaction::create($validated);
 
         return response()->json([
@@ -123,6 +126,9 @@ class TransactionController extends Controller
         }
 
         $validated = $validator->getData();
+
+        $validated['paid_at'] = date('Y-m-d', strtotime($validated['paid_at']));
+        $validated['book_at'] = date('Y-m-d', strtotime($validated['book_at']));
 
         $transaction = Transaction::findById($id)->update($validated);
 
