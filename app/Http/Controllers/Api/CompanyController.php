@@ -10,13 +10,23 @@ use Illuminate\Support\Facades\Validator;
 class CompanyController extends Controller
 {
     /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $companies =  Company::get();
+        $companies = Company::get();
 
         if (count($companies) > 0) {
             return response()->json([

@@ -10,13 +10,23 @@ use Illuminate\Support\Facades\Validator;
 class AccountController extends Controller
 {
     /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $users =  User::get();
+        $users = User::get();
 
         if (count($users) > 0) {
             return response()->json([

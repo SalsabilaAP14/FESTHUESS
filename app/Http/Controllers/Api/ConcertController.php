@@ -10,13 +10,23 @@ use Illuminate\Support\Facades\Validator;
 class ConcertController extends Controller
 {
     /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('admin')->except('index');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $concerts =  Concert::get();
+        $concerts = Concert::get();
 
         if (count($concerts) > 0) {
             return response()->json([
