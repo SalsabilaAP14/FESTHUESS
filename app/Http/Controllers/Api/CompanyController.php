@@ -122,7 +122,8 @@ class CompanyController extends Controller
 
         $validated = $validator->getData();
 
-        $company = Company::findById($id)->update($validated);
+        $company = Company::find($id);
+        $company->update($validated);
 
         return response()->json([
             'code' => 202,
@@ -140,7 +141,7 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        Company::findById($id)->delete();
+        Company::find($id)->delete();
 
         $companies = Company::get();
 

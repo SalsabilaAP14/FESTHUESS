@@ -130,7 +130,8 @@ class ConcertController extends Controller
         $validated['start_at'] = date('Y-m-d', strtotime($validated['start_at']));
         $validated['end_at'] = date('Y-m-d', strtotime($validated['end_at']));
 
-        $concert = Concert::findById($id)->update($validated);
+        $concert = Concert::find($id);
+        $concert->update($validated);
 
         return response()->json([
             'code' => 202,
@@ -148,7 +149,7 @@ class ConcertController extends Controller
      */
     public function destroy($id)
     {
-        Concert::findById($id)->delete();
+        Concert::find($id)->delete();
 
         $concerts = Concert::get();
 

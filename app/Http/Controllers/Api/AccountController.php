@@ -121,7 +121,8 @@ class AccountController extends Controller
 
         $validated = $validator->getData();
 
-        $user = User::findById($id)->update($validated);
+        $user = User::find($id);
+        $user->update($validated);
 
         return response()->json([
             'code' => 202,
@@ -139,7 +140,7 @@ class AccountController extends Controller
      */
     public function destroy($id)
     {
-        User::findById($id)->delete();
+        User::find($id)->delete();
 
         $users = User::get();
 

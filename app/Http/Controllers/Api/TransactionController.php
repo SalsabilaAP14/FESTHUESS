@@ -130,7 +130,8 @@ class TransactionController extends Controller
         $validated['paid_at'] = date('Y-m-d', strtotime($validated['paid_at']));
         $validated['book_at'] = date('Y-m-d', strtotime($validated['book_at']));
 
-        $transaction = Transaction::findById($id)->update($validated);
+        $transaction = Transaction::find($id);
+        $transaction->update($validated);
 
         return response()->json([
             'code' => 202,
@@ -148,7 +149,7 @@ class TransactionController extends Controller
      */
     public function destroy($id)
     {
-        Transaction::findById($id)->delete();
+        Transaction::find($id)->delete();
 
         $transactions = Transaction::get();
 
