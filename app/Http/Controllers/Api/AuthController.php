@@ -28,7 +28,7 @@ class AuthController extends Controller
             return response()->json([
                 'code' => 422,
                 'status' => 'error',
-                'message' => 'Data not match with our validation',
+                'message' => 'data not match with our validation',
                 'data' => $validator->errors()
             ], 422);
         }
@@ -42,7 +42,7 @@ class AuthController extends Controller
         return response()->json([
             'code' => 202,
             'status' => 'success',
-            'message' => 'Data created successfully',
+            'message' => 'data created successfully',
             'data' => $user
         ]);
     }
@@ -64,7 +64,7 @@ class AuthController extends Controller
             return response()->json([
                 'code' => 422,
                 'status' => 'error',
-                'message' => 'Data not match with our validation',
+                'message' => 'data not match with our validation',
                 'data' => $validator->errors()
             ], 422);
         }
@@ -77,7 +77,7 @@ class AuthController extends Controller
             return response()->json([
                 'code' => 401,
                 'status' => 'error',
-                'message' => 'User data not found'
+                'message' => 'user data not found'
             ], 401);
         }
 
@@ -85,7 +85,7 @@ class AuthController extends Controller
             return response()->json([
                 'code' => 401,
                 'status' => 'error',
-                'message' => 'Invalid password'
+                'message' => 'invalid password'
             ], 401);
         }
 
@@ -101,7 +101,7 @@ class AuthController extends Controller
                     'email' => $user->email
                 ],
                 'token' => $token,
-                'token_type' => 'Bearer'
+                'token_type' => 'bearer'
             ]
         ], 201);
     }

@@ -16,7 +16,7 @@ class TransactionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('admin')->except(['index', 'show']);
     }
 
     /**
@@ -26,13 +26,20 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::get();
+        $transactions = [];
+        $user = auth('sanctum')->user();
+
+        if ($user->is_admin == 'true') {
+            $transactions = Transaction::latest()->get();
+        } elseif ($user->is_admin == 'false') {
+            $transactions = Transaction::where('buyer', $user->id)->latest()->get();
+        }
 
         if (count($transactions) > 0) {
             return response()->json([
                 'code' => 202,
                 'status' => 'success',
-                'message' => 'Data successfully accepted',
+                'message' => 'data successfully accepted',
                 'data' => $transactions
             ], 202);
         }
@@ -40,8 +47,8 @@ class TransactionController extends Controller
         return response()->json([
             'code' => 202,
             'status' => 'success',
-            'message' => 'Data successfully accepted',
-            'data' => 'No data available'
+            'message' => 'data successfully accepted',
+            'data' => 'no data available'
         ], 202);
     }
 
@@ -64,7 +71,7 @@ class TransactionController extends Controller
             return response()->json([
                 'code' => 422,
                 'status' => 'error',
-                'message' => 'Data not match with our validation',
+                'message' => 'data not match with our validation',
                 'data' => $validator->errors()
             ], 422);
         }
@@ -79,7 +86,7 @@ class TransactionController extends Controller
         return response()->json([
             'code' => 202,
             'status' => 'success',
-            'message' => 'Data successfully created',
+            'message' => 'data successfully created',
             'data' => $transaction
         ], 202);
     }
@@ -92,20 +99,38 @@ class TransactionController extends Controller
      */
     public function show($id)
     {
+        $user = auth('sanctum')->user();
         $transaction = Transaction::find($id);
 
         if (!$transaction) {
             return response()->json([
                 'code' => 404,
                 'status' => 'error',
-                'message' => 'Data not found in our database'
+                'message' => 'data not found in our database'
             ], 404);
+        }
+
+        if ($user->is_admin == 'false') {
+            if ($transaction->buyer == $user->id) {
+                return response()->json([
+                    'code' => 206,
+                    'status' => 'success',
+                    'message' => 'data successfully accepted',
+                    'data' => $transaction
+                ], 206);
+            }
+            
+            return response()->json([
+                'code' => 403,
+                'status' => 'error',
+                'message' => 'transaction data is not yours'
+            ], 403);
         }
 
         return response()->json([
             'code' => 206,
             'status' => 'success',
-            'message' => 'Data successfully accepted',
+            'message' => 'data successfully accepted',
             'data' => $transaction
         ], 206);
     }
@@ -130,7 +155,7 @@ class TransactionController extends Controller
             return response()->json([
                 'code' => 422,
                 'status' => 'error',
-                'message' => 'Data not match with our validation',
+                'message' => 'data not match with our validation',
                 'data' => $validator->errors()
             ], 422);
         }
@@ -146,7 +171,7 @@ class TransactionController extends Controller
         return response()->json([
             'code' => 202,
             'status' => 'success',
-            'message' => 'Data successfully updated',
+            'message' => 'data successfully updated',
             'data' => $transaction
         ], 202);
     }
@@ -167,7 +192,7 @@ class TransactionController extends Controller
             return response()->json([
                 'code' => 202,
                 'status' => 'success',
-                'message' => 'Data successfully removed',
+                'message' => 'data successfully removed',
                 'data' => $transactions
             ], 202);
         }
@@ -175,8 +200,8 @@ class TransactionController extends Controller
         return response()->json([
             'code' => 202,
             'status' => 'success',
-            'message' => 'Data successfully removed',
-            'data' => 'No data available'
+            'message' => 'data successfully removed',
+            'data' => 'no data available'
         ], 202);
     }
 }

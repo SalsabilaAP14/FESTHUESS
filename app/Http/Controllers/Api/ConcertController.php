@@ -16,7 +16,7 @@ class ConcertController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin')->except('index');
+        $this->middleware('admin')->except(['index', 'show']);
     }
 
     /**
@@ -32,7 +32,7 @@ class ConcertController extends Controller
             return response()->json([
                 'code' => 202,
                 'status' => 'success',
-                'message' => 'Data successfully accepted',
+                'message' => 'data successfully accepted',
                 'data' => $concerts
             ], 202);
         }
@@ -40,8 +40,8 @@ class ConcertController extends Controller
         return response()->json([
             'code' => 202,
             'status' => 'success',
-            'message' => 'Data successfully accepted',
-            'data' => 'No data available'
+            'message' => 'data successfully accepted',
+            'data' => 'no data available'
         ], 202);
     }
 
@@ -54,7 +54,6 @@ class ConcertController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'company' => ['required','numeric'],
             'name' => ['required','string','max:255','unique:concerts,name'],
             'start_at' => ['required','string','date_format:d-m-Y'],
             'end_at' => ['required','string','date_format:d-m-Y']
@@ -64,7 +63,7 @@ class ConcertController extends Controller
             return response()->json([
                 'code' => 422,
                 'status' => 'error',
-                'message' => 'Data not match with our validation',
+                'message' => 'data not match with our validation',
                 'data' => $validator->errors()
             ], 422);
         }
@@ -79,7 +78,7 @@ class ConcertController extends Controller
         return response()->json([
             'code' => 202,
             'status' => 'success',
-            'message' => 'Data successfully created',
+            'message' => 'data successfully created',
             'data' => $concert
         ], 202);
     }
@@ -98,14 +97,14 @@ class ConcertController extends Controller
             return response()->json([
                 'code' => 404,
                 'status' => 'error',
-                'message' => 'Data not found in our database'
+                'message' => 'data not found in our database'
             ], 404);
         }
 
         return response()->json([
             'code' => 206,
             'status' => 'success',
-            'message' => 'Data successfully accepted',
+            'message' => 'data successfully accepted',
             'data' => $concert
         ], 206);
     }
@@ -120,7 +119,6 @@ class ConcertController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'company' => ['nullable','numeric'],
             'name' => ['nullable','string','max:255','unique:concerts,name'],
             'start_at' => ['nullable','string','date_format:d-m-Y'],
             'end_at' => ['nullable','string','date_format:d-m-Y']
@@ -130,7 +128,7 @@ class ConcertController extends Controller
             return response()->json([
                 'code' => 422,
                 'status' => 'error',
-                'message' => 'Data not match with our validation',
+                'message' => 'data not match with our validation',
                 'data' => $validator->errors()
             ], 422);
         }
@@ -146,7 +144,7 @@ class ConcertController extends Controller
         return response()->json([
             'code' => 202,
             'status' => 'success',
-            'message' => 'Data successfully updated',
+            'message' => 'data successfully updated',
             'data' => $concert
         ], 202);
     }
@@ -167,7 +165,7 @@ class ConcertController extends Controller
             return response()->json([
                 'code' => 202,
                 'status' => 'success',
-                'message' => 'Data successfully removed',
+                'message' => 'data successfully removed',
                 'data' => $concerts
             ], 202);
         }
@@ -175,8 +173,8 @@ class ConcertController extends Controller
         return response()->json([
             'code' => 202,
             'status' => 'success',
-            'message' => 'Data successfully removed',
-            'data' => 'No data available'
+            'message' => 'data successfully removed',
+            'data' => 'no data available'
         ], 202);
     }
 }

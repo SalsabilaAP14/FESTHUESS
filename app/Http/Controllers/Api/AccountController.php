@@ -16,7 +16,7 @@ class AccountController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('admin')->except('index');
     }
 
     /**
@@ -26,13 +26,22 @@ class AccountController extends Controller
      */
     public function index()
     {
+        if (auth('sanctum')->user()->is_admin == 'false') {
+            return response()->json([
+                'code' => 202,
+                'status' => 'success',
+                'message' => 'data successfully accepted',
+                'data' => auth('sanctum')->user()
+            ], 202);
+        }
+
         $users = User::get();
 
         if (count($users) > 0) {
             return response()->json([
                 'code' => 202,
                 'status' => 'success',
-                'message' => 'Data successfully accepted',
+                'message' => 'data successfully accepted',
                 'data' => $users
             ], 202);
         }
@@ -40,8 +49,8 @@ class AccountController extends Controller
         return response()->json([
             'code' => 202,
             'status' => 'success',
-            'message' => 'Data successfully accepted',
-            'data' => 'No data available'
+            'message' => 'data successfully accepted',
+            'data' => 'no data available'
         ], 202);
     }
 
@@ -63,7 +72,7 @@ class AccountController extends Controller
             return response()->json([
                 'code' => 422,
                 'status' => 'error',
-                'message' => 'Data not match with our validation',
+                'message' => 'data not match with our validation',
                 'data' => $validator->errors()
             ], 422);
         }
@@ -75,7 +84,7 @@ class AccountController extends Controller
         return response()->json([
             'code' => 202,
             'status' => 'success',
-            'message' => 'Data successfully created',
+            'message' => 'data successfully created',
             'data' => $user
         ], 202);
     }
@@ -94,14 +103,14 @@ class AccountController extends Controller
             return response()->json([
                 'code' => 404,
                 'status' => 'error',
-                'message' => 'Data not found in our database'
+                'message' => 'data not found in our database'
             ], 404);
         }
 
         return response()->json([
             'code' => 206,
             'status' => 'success',
-            'message' => 'Data successfully accepted',
+            'message' => 'data successfully accepted',
             'data' => $user
         ], 206);
     }
@@ -124,7 +133,7 @@ class AccountController extends Controller
             return response()->json([
                 'code' => 422,
                 'status' => 'error',
-                'message' => 'Data not match with our validation',
+                'message' => 'data not match with our validation',
                 'data' => $validator->errors()
             ], 422);
         }
@@ -137,7 +146,7 @@ class AccountController extends Controller
         return response()->json([
             'code' => 202,
             'status' => 'success',
-            'message' => 'Data successfully updated',
+            'message' => 'data successfully updated',
             'data' => $user
         ], 202);
     }
@@ -158,7 +167,7 @@ class AccountController extends Controller
             return response()->json([
                 'code' => 202,
                 'status' => 'success',
-                'message' => 'Data successfully removed',
+                'message' => 'data successfully removed',
                 'data' => $users
             ], 202);
         }
@@ -166,8 +175,8 @@ class AccountController extends Controller
         return response()->json([
             'code' => 202,
             'status' => 'success',
-            'message' => 'Data successfully removed',
-            'data' => 'No data available'
+            'message' => 'data successfully removed',
+            'data' => 'no data available'
         ], 202);
     }
 }
