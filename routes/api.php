@@ -35,13 +35,15 @@ Route::middleware('auth:sanctum')->group(function() {
     // Main Route
     Route::prefix('main')->group(function() {
         Route::post('buy', [BuyController::class, 'store']);
-        Route::apiResource('company', CompanyController::class);
-        Route::apiResource('concert', ConcertController::class);
-        Route::apiResource('transaction', TransactionController::class);
+        Route::apiResource('account', AccountController::class, ['only' => ['index']]);
+        Route::apiResource('concert', ConcertController::class, ['only' => ['index', 'show']]);
+        Route::apiResource('transaction', TransactionController::class, ['only' => ['index', 'show']]);
     });
 
     // Admin Route
     Route::prefix('admin')->group(function() {
         Route::apiResource('account', AccountController::class);
+        Route::apiResource('concert', ConcertController::class);
+        Route::apiResource('transaction', TransactionController::class);
     });
 });
