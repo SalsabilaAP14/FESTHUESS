@@ -78,6 +78,17 @@ Contributors names and contact info
 
 ## Version History
 
-* 1.0-alpha
-    * Initial release
-    * Add main feature
+* 1.1.10-alpha
+    * add route for admin
+    * add route for user
+    * change postman
+    * change project documentation
+* 1.1.6-alpha
+    * add multi user
+    * change user database table
+* 1.1.1-alpha
+    * change postman
+    * fix error when find data
+* 1.0.0-alpha
+    * initial release
+    * add main feature
