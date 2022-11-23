@@ -15,7 +15,6 @@ class Concert extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'company',
         'name',
         'start_at',
         'end_at'
