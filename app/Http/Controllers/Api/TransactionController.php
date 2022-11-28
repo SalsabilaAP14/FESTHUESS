@@ -162,9 +162,14 @@ class TransactionController extends Controller
 
         $validated = $validator->getData();
 
-        $validated['paid_at'] = date('Y-m-d', strtotime($validated['paid_at']));
-        $validated['book_at'] = date('Y-m-d', strtotime($validated['book_at']));
+        if (!empty($validated['paid_at'])) {
+            $validated['paid_at'] = date('Y-m-d', strtotime($validated['paid_at']));
+        }
 
+        if (!empty($validated['book_at'])) {
+            $validated['book_at'] = date('Y-m-d', strtotime($validated['book_at']));
+        }
+        
         $transaction = Transaction::find($id);
         $transaction->update($validated);
 

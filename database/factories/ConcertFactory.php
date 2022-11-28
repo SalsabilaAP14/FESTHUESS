@@ -17,7 +17,6 @@ class ConcertFactory extends Factory
     public function definition()
     {
         return [
-            'company' => rand(1,10),
             'name' => fake()->name,
             'start_at' => now()->format('Y-m-d'),
             'end_at' => now()->format('Y-m-d')

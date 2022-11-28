@@ -135,8 +135,13 @@ class ConcertController extends Controller
 
         $validated = $validator->getData();
 
-        $validated['start_at'] = date('Y-m-d', strtotime($validated['start_at']));
-        $validated['end_at'] = date('Y-m-d', strtotime($validated['end_at']));
+        if (!empty($validated['start_at'])) {
+            $validated['start_at'] = date('Y-m-d', strtotime($validated['start_at']));
+        }
+
+        if (!empty($validated['end_at'])) {
+            $validated['end_at'] = date('Y-m-d', strtotime($validated['end_at']));
+        }
 
         $concert = Concert::find($id);
         $concert->update($validated);
