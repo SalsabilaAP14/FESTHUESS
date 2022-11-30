@@ -77,9 +77,7 @@ class AccountController extends Controller
             ], 422);
         }
 
-        $validated = $validator->getData();
-
-        $user = User::create($validated);
+        $user = User::create($validator->getData());
 
         return response()->json([
             'code' => 202,
@@ -138,10 +136,8 @@ class AccountController extends Controller
             ], 422);
         }
 
-        $validated = $validator->getData();
-
         $user = User::find($id);
-        $user->update($validated);
+        $user->update($validator->getData());
 
         return response()->json([
             'code' => 202,

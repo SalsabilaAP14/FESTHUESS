@@ -32,7 +32,7 @@ class TransactionController extends Controller
         if ($user->is_admin == 'true') {
             $transactions = Transaction::latest()->get();
         } elseif ($user->is_admin == 'false') {
-            $transactions = Transaction::where('buyer', $user->id)->latest()->get();
+            $transactions = Transaction::where('user', $user->id)->latest()->get();
         }
 
         if (count($transactions) > 0) {
@@ -111,7 +111,7 @@ class TransactionController extends Controller
         }
 
         if ($user->is_admin == 'false') {
-            if ($transaction->buyer == $user->id) {
+            if ($transaction->user == $user->id) {
                 return response()->json([
                     'code' => 206,
                     'status' => 'success',
