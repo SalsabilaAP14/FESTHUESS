@@ -17,7 +17,7 @@ class BuyController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('user');
+        $this->middleware('admin');
     }
 
     /**
